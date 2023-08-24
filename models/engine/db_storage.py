@@ -79,7 +79,7 @@ class DBStorage:
         """returns the object based on the class and it's ID"""
         if cls is None or id is None:
             return None
-        if cls not in classes:
+        if cls not in classes.values():
             return None
         cls = classes[cls]
         obj_dict = self.all(cls)
