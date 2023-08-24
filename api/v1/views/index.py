@@ -21,10 +21,11 @@ def status():
 @app_views.route("/stats", strict_slashes=False)
 def count_obj():
     """retrieve the number of each objects by type"""
-    cls = storage.classes
+    cls = {"amenity": Amenity, "city": City,
+           "place": Place, "review": Review, "state": State, "user": User}
     result_dict = {}
     for k, v in cls.items():
-        new_k = k.lower
-        number = v.count()
+        new_k = k.lower()
+        number = models.storage.count(v)
         result_dict[new_k] = number
     return jsonify(result_dict)
