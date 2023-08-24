@@ -1,12 +1,14 @@
 #!/usr/bin/python3
-"""build Flask web application """
+"""build Flask application and register blueprint"""
 from api.v1.views import app_views
 from flask import Flask
+from flask import Blueprint
 from models import storage
 
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
+
 
 @app.teardown_appcontext
 def app_teardown():
@@ -15,4 +17,6 @@ def app_teardown():
 
 
 if __name__ == "__main__":
+    host = os.getenv('HBNB_API_HOST', '0.0.0.0')
+    port = os.getenv('HBNB_API_PORT', '5000')
     app.run(host="0.0.0.0", port=5000, threaded=True)
