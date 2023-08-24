@@ -24,6 +24,7 @@ def count_obj():
     cls = storage.classes
     result_dict = {}
     for k, v in cls.items():
+        new_k = k.lower
         number = v.count()
-        result_dict[k] = number
+        result_dict[new_k] = number
     return jsonify(result_dict)
