@@ -25,7 +25,6 @@ def count_obj():
            "place": Place, "review": Review, "state": State, "user": User}
     result_dict = {}
     for k, v in cls.items():
-        new_k = k.lower()
-        number = models.storage.count(v)
-        result_dict[new_k] = number
+        number = storage.count(v)
+        result_dict[k] = number
     return jsonify(result_dict)
