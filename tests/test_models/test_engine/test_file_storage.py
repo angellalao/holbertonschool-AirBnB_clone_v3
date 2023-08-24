@@ -118,8 +118,12 @@ class TestFileStorage(unittest.TestCase):
     def test_get(self):
         """test that get returns an object based on given class and id"""
         storage = FileStorage()
-        obj = storage.get("State", "fake_id")
+        obj = storage.get("fake_cls", "fake_id")
         self.assertIs(obj, None)
+        new_state = State()
+        new_state.save()
+        new_state_id = new_state.id
+        self.assertIs(storage.get("State", new_state_id), new_state)
 
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_count(self):
