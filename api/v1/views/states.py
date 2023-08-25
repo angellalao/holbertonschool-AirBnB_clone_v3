@@ -8,37 +8,38 @@ from models import storage
 
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
-def get_list_task():
+def get_states():
     """retrieves a dictionary of all state objects"""
     obj_list = []
-    obj_dict = models.storage.all(State)
+    obj_dict = storage.all(State)
     for obj in obj_dict.values():
         obj_list.append(obj)
     return jsonify(obj_list.to_dict())
 
 
 @app_views.route('/states/<state_id>', methods=['GET'], strict_slashes=False)
-def get_obj(state_id):
+def get_state(state_id):
     """retrieves state object based on ID"""
-    obj = models.storage.get(State, state_id)
+    obj = storage.get(State, state_id)
     if obj is None:
         abort(404)
     return jsonify(obj.to_dict())
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'], strict_slashes=False)
-def delete_obj(state_id):
+@app_views.route('/states/<state_id>', methods=['DELETE'],
+                 strict_slashes=False)
+def delete_state(state_id):
     """deletes state object based on ID"""
-    obj = models.storage.get(State, state_id)
+    obj = storage.get(State, state_id)
     if obj is None:
         abort(404)
-    models.storage.delete(obj)
-    models.storage.save()
+    storage.delete(obj)
+    storage.save()
     return(jsonify({}), 200)
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
-def create_obj():
+def create_state():
     """creates new state object """
     data = request.get_json()
     if data is None:
@@ -51,9 +52,9 @@ def create_obj():
 
 
 @app_views.route('/states/<state_id>', methods=['PUT'], strict_slashes=False)
-def update_obj(state_id):
+def update_state(state_id):
     """updates a state object"""
-    obj = models.storage.get(State, state_id)
+    obj = storage.get(State, state_id)
     if obj is None:
         abort(404)
     data = request.get_json()
