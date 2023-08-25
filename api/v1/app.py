@@ -16,6 +16,12 @@ def app_teardown(exception):
     storage.close()
 
 
+@app.errorhandler(404)
+def not_found(e):
+    """returns json formatted 404 status code response if page not found"""
+    return jsonify({"error": "Not found"})
+
+
 if __name__ == "__main__":
     host_name = os.getenv('HBNB_API_HOST', '0.0.0.0')
     host_port = os.getenv('HBNB_API_PORT', '5000')
