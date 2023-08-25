@@ -35,7 +35,7 @@ def delete_state(state_id):
         abort(404)
     storage.delete(obj)
     storage.save()
-    return(jsonify({}), 200)
+    return jsonify({}), 200
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
@@ -58,7 +58,7 @@ def update_state(state_id):
     if obj is None:
         abort(404)
     data = request.get_json()
-    if data is None:
+    if not data:
         abort(400, description="Not a JSON")
     ignore_list = ["id", "created_at", "updated_at"]
     for key, value in data.items():
