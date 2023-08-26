@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 """view for City objects that handles all default RESTFul API actions"""
 from api.v1.views import app_views
-from flask import jsonify
-from flask import Flask, abort, request
+from flask import Flask, abort, request, jsonify
 from models.state import State
 from models.city import City
 from models import storage
@@ -15,10 +14,12 @@ def get_cities_of_state(state_id):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    city_list = state.cities
-    for city in city_list:
-        city.to_dict()
-    return jsonify(city_list)
+    city_obj_list = state.cities
+    city_dict_list = []
+    for obj in city_obj_list:
+        city_dict = obj.to_dict()
+        city_to_dict.append(city_dict)
+    return jsonify(city_dict_list)
 
 
 @app_views.route('/cities/<city_id>', methods=['GET'], strict_slashes=False)
