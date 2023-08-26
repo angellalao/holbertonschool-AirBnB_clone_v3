@@ -60,6 +60,8 @@ def create_review(place_id):
     user_obj = storage.get(User, user_id)
     if user_obj is None:
         abort(404)
+    if 'text' not in data.keys():
+        abort(400, description="Missing text")
     new_review = Review(**data)
     new_review.place_id = place_id
     new_review.save()
