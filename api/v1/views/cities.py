@@ -16,6 +16,8 @@ def get_cities_of_state(state_id):
     if state is None:
         abort(404)
     city_list = state.cities
+    for city in city_list:
+        city.to_dict()
     return jsonify(city_list)
 
 
@@ -54,7 +56,7 @@ def create_city():
         abort(400, description="Missing name")
     new_city = City(**data)
     new_city.state_id = state_id
-    new_city.save()
+    storage.save()
     return jsonify(new_city.to_dict()), 201
 
 
