@@ -27,7 +27,7 @@ def get_user(user_id):
 
 @app_views.route('/users/<user_id>', methods=['DELETE'],
                  strict_slashes=False)
-def delete_user(state_id):
+def delete_user(user_id):
     """deletes user object based on ID"""
     obj = storage.get(User, user_id)
     if obj is None:
@@ -43,8 +43,10 @@ def create_user():
     data = request.get_json()
     if data is None:
         abort(400, description="Not a JSON")
-    if 'name' not in data.keys():
-        abort(400, description="Missing name")
+    if 'email' not in data.keys():
+        abort(400, description="Missing email")
+    if 'password' not in data.keys():
+        abort(400, description="Missing password")
     new_user = User(**data)
     new_user.save()
     return jsonify(new_user.to_dict()), 201
